@@ -4,7 +4,6 @@ class Board
 
   def initialize(length)
     @length = length
-    # @board = create_spaces
   end
 
   def get_row_letters
@@ -44,43 +43,45 @@ class Board
     end
   end
 
+  def has_north_neighbor?(coordinates)
+    get_row_letters.index(coordinates.split('')[0]) > 0
+  end
+
+  def has_south_neighbor?(coordinates)
+    get_row_letters.index(coordinates.split('')[0]) < @length - 1
+  end
+
+  def has_east_neighbor?(coordinates)
+    (coordinates[1..-1].to_i > 0) && (coordinates[1..-1].to_i < @length)
+  end
+
+  def has_west_neighbor?(coordinates)
+    coordinates[1..-1].to_i > 1
+  end
+
+  def get_north_neighbor(coordinates)
+    get_row_letters[get_row_letters.index(coordinates.split('')[0]) - 1] + coordinates[1..-1]
+  end
+
+  def get_south_neighbor(coordinates)
+    get_row_letters[get_row_letters.index(coordinates.split('')[0]) + 1] + coordinates[1..-1]
+  end
+
+  def get_east_neighbor(coordinates)
+    coordinates.split('')[0] + (coordinates[1..-1].to_i + 1).to_s
+  end
+
+  def get_west_neighbor(coordinates)
+    coordinates.split('')[0] + (coordinates[1..-1].to_i - 1).to_s
+  end
+
+  def neighbors(coordinates)
+    neighbors = []
+    neighbors << get_north_neighbor(coordinates) if has_north_neighbor?(coordinates)
+    neighbors << get_east_neighbor(coordinates) if has_east_neighbor?(coordinates)
+    neighbors << get_south_neighbor(coordinates) if has_south_neighbor?(coordinates)
+    neighbors << get_west_neighbor(coordinates) if has_west_neighbor?(coordinates)
+    return neighbors
+  end
+
 end
-
-# get_row_letters.each do |letter|
-#   create_spaces.each do |key,value|
-#
-# end
-#
-#   row << {key => value} if key.include?(get_row_letters[index])
-# end
-
-
-# grid = create_array_structure
-# create_array_structure.each.with_index do |row, index|
-#   #binding.pry
-#   create_spaces.each do |key,value|
-#
-#     row << {key => value} if key.include?(get_row_letters[index])
-#
-#   end
-#   grid[index] << row
-#   #select { |key| key.to_s.include?(get_row_letters[index])}
-# end
-#
-
-
-
-
-
-# create_spaces.each_slice(@length).to_a
-# get_row_letters.map do |letter|
-#   create_spaces.select { |key| key.to_s.include?(letter) }
-# # end
-# grid = []
-#
-# # @length.times do { grid << [] }
-#
-# create_spaces.each do |space|
-#   row << space
-# end
-# binding.pry

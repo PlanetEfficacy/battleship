@@ -14,7 +14,7 @@
       <img src="./assets/0.10.0/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2016-07-16T23:51:47-06:00">2016-07-16T23:51:47-06:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2016-07-17T01:00:32-06:00">2016-07-17T01:00:32-06:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -25,15 +25,15 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         112.89
+         70.63
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>2</b> files in total.
-    <b>31</b> relevant lines. 
-    <span class="green"><b>31</b> lines covered</span> and
+    <b>54</b> relevant lines. 
+    <span class="green"><b>54</b> lines covered</span> and
     <span class="red"><b>0</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -53,11 +53,11 @@
       <tr>
         <td class="strong"><a href="#0bc2890471ba32ac12ccf63d686fcdd4174b31f9" class="src_link" title="lib/board.rb">lib/board.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>87</td>
-        <td>25</td>
-        <td>25</td>
+        <td>88</td>
+        <td>48</td>
+        <td>48</td>
         <td>0</td>
-        <td>86.1</td>
+        <td>51.4</td>
       </tr>
       
       <tr>
@@ -91,8 +91,8 @@
     <h3>lib/board.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>25</b> relevant lines. 
-      <span class="green"><b>25</b> lines covered</span> and
+      <b>48</b> relevant lines. 
+      <span class="green"><b>48</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -130,8 +130,8 @@
           <code class="ruby">  def initialize(length)</code>
         </li>
       
-        <li class="covered" data-hits="21" data-linenumber="6">
-          <span class="hits">21</span>
+        <li class="covered" data-hits="48" data-linenumber="6">
+          <span class="hits">48</span>
           
           <code class="ruby">    @length = length</code>
         </li>
@@ -160,8 +160,8 @@
           <code class="ruby">  def get_row_letters</code>
         </li>
       
-        <li class="covered" data-hits="18" data-linenumber="11">
-          <span class="hits">18</span>
+        <li class="covered" data-hits="108" data-linenumber="11">
+          <span class="hits">108</span>
           
           <code class="ruby">    (&quot;A&quot;..&quot;Z&quot;).to_a.shift(@length)</code>
         </li>
@@ -367,79 +367,79 @@
         <li class="never" data-hits="" data-linenumber="45">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="46">
           
           
-          <code class="ruby">  end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="47">
-          
-          
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="48">
+        <li class="covered" data-hits="1" data-linenumber="47">
+          <span class="hits">1</span>
           
+          <code class="ruby">  def has_north_neighbor?(coordinates)</code>
+        </li>
+      
+        <li class="covered" data-hits="18" data-linenumber="48">
+          <span class="hits">18</span>
           
-          <code class="ruby">end</code>
+          <code class="ruby">    get_row_letters.index(coordinates.split(&#39;&#39;)[0]) &gt; 0</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="49">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="50">
           
           
-          <code class="ruby"># get_row_letters.each do |letter|</code>
+          <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="51">
+        <li class="covered" data-hits="1" data-linenumber="51">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">#   create_spaces.each do |key,value|</code>
+          <code class="ruby">  def has_south_neighbor?(coordinates)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="52">
+        <li class="covered" data-hits="18" data-linenumber="52">
+          <span class="hits">18</span>
           
-          
-          <code class="ruby">#</code>
+          <code class="ruby">    get_row_letters.index(coordinates.split(&#39;&#39;)[0]) &lt; @length - 1</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="53">
           
           
-          <code class="ruby"># end</code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="54">
           
           
-          <code class="ruby">#</code>
+          <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="55">
+        <li class="covered" data-hits="1" data-linenumber="55">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">#   row &lt;&lt; {key =&gt; value} if key.include?(get_row_letters[index])</code>
+          <code class="ruby">  def has_east_neighbor?(coordinates)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="56">
+        <li class="covered" data-hits="18" data-linenumber="56">
+          <span class="hits">18</span>
           
-          
-          <code class="ruby"># end</code>
+          <code class="ruby">    (coordinates[1..-1].to_i &gt; 0) &amp;&amp; (coordinates[1..-1].to_i &lt; @length)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="57">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="58">
@@ -448,94 +448,94 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="59">
+        <li class="covered" data-hits="1" data-linenumber="59">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby"># grid = create_array_structure</code>
+          <code class="ruby">  def has_west_neighbor?(coordinates)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="60">
+        <li class="covered" data-hits="18" data-linenumber="60">
+          <span class="hits">18</span>
           
-          
-          <code class="ruby"># create_array_structure.each.with_index do |row, index|</code>
+          <code class="ruby">    coordinates[1..-1].to_i &gt; 1</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="61">
           
           
-          <code class="ruby">#   #binding.pry</code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="62">
           
           
-          <code class="ruby">#   create_spaces.each do |key,value|</code>
+          <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="63">
+        <li class="covered" data-hits="1" data-linenumber="63">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">#</code>
+          <code class="ruby">  def get_north_neighbor(coordinates)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="64">
+        <li class="covered" data-hits="13" data-linenumber="64">
+          <span class="hits">13</span>
           
-          
-          <code class="ruby">#     row &lt;&lt; {key =&gt; value} if key.include?(get_row_letters[index])</code>
+          <code class="ruby">    get_row_letters[get_row_letters.index(coordinates.split(&#39;&#39;)[0]) - 1] + coordinates[1..-1]</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="65">
           
           
-          <code class="ruby">#</code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="66">
           
           
-          <code class="ruby">#   end</code>
+          <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="67">
+        <li class="covered" data-hits="1" data-linenumber="67">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">#   grid[index] &lt;&lt; row</code>
+          <code class="ruby">  def get_south_neighbor(coordinates)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="68">
+        <li class="covered" data-hits="14" data-linenumber="68">
+          <span class="hits">14</span>
           
-          
-          <code class="ruby">#   #select { |key| key.to_s.include?(get_row_letters[index])}</code>
+          <code class="ruby">    get_row_letters[get_row_letters.index(coordinates.split(&#39;&#39;)[0]) + 1] + coordinates[1..-1]</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="69">
           
           
-          <code class="ruby"># end</code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="70">
           
           
-          <code class="ruby">#</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="71">
-          
-          
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="72">
+        <li class="covered" data-hits="1" data-linenumber="71">
+          <span class="hits">1</span>
           
+          <code class="ruby">  def get_east_neighbor(coordinates)</code>
+        </li>
+      
+        <li class="covered" data-hits="16" data-linenumber="72">
+          <span class="hits">16</span>
           
-          <code class="ruby"></code>
+          <code class="ruby">    coordinates.split(&#39;&#39;)[0] + (coordinates[1..-1].to_i + 1).to_s</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="73">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="74">
@@ -544,82 +544,88 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="75">
+        <li class="covered" data-hits="1" data-linenumber="75">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby"></code>
+          <code class="ruby">  def get_west_neighbor(coordinates)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="76">
+        <li class="covered" data-hits="17" data-linenumber="76">
+          <span class="hits">17</span>
           
-          
-          <code class="ruby"># create_spaces.each_slice(@length).to_a</code>
+          <code class="ruby">    coordinates.split(&#39;&#39;)[0] + (coordinates[1..-1].to_i - 1).to_s</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="77">
           
           
-          <code class="ruby"># get_row_letters.map do |letter|</code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="78">
           
           
-          <code class="ruby">#   create_spaces.select { |key| key.to_s.include?(letter) }</code>
+          <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="79">
+        <li class="covered" data-hits="1" data-linenumber="79">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby"># # end</code>
+          <code class="ruby">  def neighbors(coordinates)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="80">
+        <li class="covered" data-hits="9" data-linenumber="80">
+          <span class="hits">9</span>
           
-          
-          <code class="ruby"># grid = []</code>
+          <code class="ruby">    neighbors = []</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="81">
+        <li class="covered" data-hits="9" data-linenumber="81">
+          <span class="hits">9</span>
           
-          
-          <code class="ruby">#</code>
+          <code class="ruby">    neighbors &lt;&lt; get_north_neighbor(coordinates) if has_north_neighbor?(coordinates)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="82">
+        <li class="covered" data-hits="9" data-linenumber="82">
+          <span class="hits">9</span>
           
-          
-          <code class="ruby"># # @length.times do { grid &lt;&lt; [] }</code>
+          <code class="ruby">    neighbors &lt;&lt; get_east_neighbor(coordinates) if has_east_neighbor?(coordinates)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="83">
+        <li class="covered" data-hits="9" data-linenumber="83">
+          <span class="hits">9</span>
           
-          
-          <code class="ruby">#</code>
+          <code class="ruby">    neighbors &lt;&lt; get_south_neighbor(coordinates) if has_south_neighbor?(coordinates)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="84">
+        <li class="covered" data-hits="9" data-linenumber="84">
+          <span class="hits">9</span>
           
-          
-          <code class="ruby"># create_spaces.each do |space|</code>
+          <code class="ruby">    neighbors &lt;&lt; get_west_neighbor(coordinates) if has_west_neighbor?(coordinates)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="85">
+        <li class="covered" data-hits="9" data-linenumber="85">
+          <span class="hits">9</span>
           
-          
-          <code class="ruby">#   row &lt;&lt; space</code>
+          <code class="ruby">    return neighbors</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="86">
           
           
-          <code class="ruby"># end</code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="87">
           
           
-          <code class="ruby"># binding.pry</code>
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="88">
+          
+          
+          <code class="ruby">end</code>
         </li>
       
     </ol>
