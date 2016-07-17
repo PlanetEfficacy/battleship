@@ -1,6 +1,5 @@
 require './test/test_helper'
 require './lib/board'
-require 'pry'
 
 class BoardTest < Minitest::Test
   def test_board_has_length
