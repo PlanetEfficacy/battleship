@@ -94,4 +94,8 @@ class Board
     end
   end
 
+  def contains?(coordinates)
+    create_space_names.include?(coordinates)
+  end
+
 end

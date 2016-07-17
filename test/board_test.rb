@@ -419,4 +419,32 @@ class BoardTest < Minitest::Test
     assert_instance_of Space, b3.get_space("K12")
   end
 
+  def test_board_knows_if_it_does_not_contain_space
+    b1 = Board.new(4)
+    b2 = Board.new(8)
+    b3 = Board.new(12)
+
+    assert b1.contains?("A1")
+    assert b1.contains?("D4")
+    refute b1.contains?("D5")
+    refute b1.contains?("A0")
+    refute b1.contains?("B9")
+    refute b1.contains?("F9")
+
+    assert b2.contains?("A1")
+    assert b2.contains?("H8")
+    refute b2.contains?("H9")
+    refute b2.contains?("A0")
+    refute b2.contains?("C9")
+    refute b2.contains?("I9")
+
+    assert b3.contains?("A1")
+    assert b3.contains?("K12")
+    refute b3.contains?("K13")
+    refute b3.contains?("A0")
+    refute b3.contains?("E13")
+    refute b3.contains?("X4")
+
+  end
+
 end
