@@ -1,9 +1,11 @@
 require "./lib/space"
 class Board
-  attr_reader :length
+  attr_reader :length,
+              :board
 
   def initialize(length)
     @length = length
+    @board = create_grid
   end
 
   def get_row_letters
@@ -82,6 +84,14 @@ class Board
     neighbors << get_south_neighbor(coordinates) if has_south_neighbor?(coordinates)
     neighbors << get_west_neighbor(coordinates) if has_west_neighbor?(coordinates)
     return neighbors
+  end
+
+  def get_space(coordinates)
+    @board.each do |row|
+      row.each do |space_hash|
+        return space_hash[coordinates] if space_hash.keys[0] == coordinates
+      end
+    end
   end
 
 end
