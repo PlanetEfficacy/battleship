@@ -27,4 +27,9 @@ class Rules
     end
   end
 
+  def ship_overlap_compliance?(board, ship, start_space, end_space)
+    spaces_to_check = board.get_spaces_between(start_space, end_space)
+    spaces_to_check.none? { |coordinate| board.space_occupied?(coordinate) }
+  end
+
 end

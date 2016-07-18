@@ -139,4 +139,28 @@ class RulesTest < Minitest::Test
     assert rules.length_compliance?(board, ship5, start_space_5, end_space_5)
   end
 
+  def test_ship_overlap_compliance?
+    rules = Rules.new
+    b1 = Board.new(4)
+    p1 = Player.new([2,3])
+    s3 = p1.get_ship(3)
+    s2 = p1.get_ship(2)
+    p1.place_ship(b1, s3, "A1", "A3")
+
+
+    b2 = Board.new(12)
+    p2 = Player.new([2,3,4,5])
+    s3 = p2.get_ship(3)
+    s4 = p2.get_ship(4)
+    s5 = p2.get_ship(5)
+    p2.place_ship(b2, s5, "L12", "H12")
+    p2.place_ship(b2, s3, "B2", "B4")
+
+
+    assert_equal false, rules.ship_overlap_compliance?(b1, s2, "A1", "B1")
+    assert_equal false, rules.ship_overlap_compliance?(b2, s4, "H9", "H12")
+    assert_equal false, rules.ship_overlap_compliance?(b2, s5, "A3", "E3")
+    assert_equal true, rules.ship_overlap_compliance?(b2, s5, "A1", "E1")
+  end
+
 end

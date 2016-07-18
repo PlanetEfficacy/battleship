@@ -32,10 +32,13 @@ class Player
     @fleet = @ships.map { |length| Ship.new(length) }
   end
 
+  def get_ship(type)
+    @fleet.find { |ship| ship.length == type }
+  end
+
   def place_ship(board, ship, start_space, end_space)
     ship.place(start_space, end_space)
     board.set_spaces_occupied(start_space, end_space)
   end
-
 
 end

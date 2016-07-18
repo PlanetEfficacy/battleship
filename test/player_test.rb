@@ -151,8 +151,15 @@ class PlayerTest < Minitest::Test
     assert b1.space_occupied?("A1")
     assert b1.space_occupied?("A2")
     refute b1.space_occupied?("A3")
+  end
 
+  def test_a_player_can_get_a_ship_from_its_fleet
+    p1 = Player.new([2, 3, 4])
+    ship2 = p1.get_ship(2)
+    ship3 = p1.get_ship(3)
 
+    assert_equal 2, ship2.length
+    assert_equal 3, ship3.length
   end
 
 end
