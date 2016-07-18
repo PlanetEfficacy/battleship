@@ -56,12 +56,60 @@ class RulesTest < Minitest::Test
     end_space_2 = "A2"
     ship_1 = player.fleet[0]
 
-    refute rules.two_unit_ship_wrap_violation?(board, ship_1, start_space_1, end_space_1)
-    assert rules.two_unit_ship_wrap_violation?(board, ship_1, start_space_1, end_space_2)
+    refute rules.two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_1)
+    rules.two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_2)
+    assert rules.two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_2)
+  end
+
+  def test_rules_disallow_diagonal_placement
+    rules = Rules.new
+    board = Board.new(12)
+    player = Player.new([2, 3, 4, 5])
+    start_space_1 = "A1"
+    invalid_end_space_1 = "C3"
+    invalid_end_space_2 = "B2"
+    valid_end_space_1 = "C1"
+    valid_end_space_2 = "A3"
+    ship_1 = player.fleet[1]
+
+    refute rules.diagonal_placement_compliance?(board, ship_1, start_space_1, invalid_end_space_1)
+    refute rules.diagonal_placement_compliance?(board, ship_1, start_space_1, invalid_end_space_2)
+    assert rules.diagonal_placement_compliance?(board, ship_1, start_space_1, valid_end_space_1)
+    assert rules.diagonal_placement_compliance?(board, ship_1, start_space_1, valid_end_space_2)
+
   end
 
   def test_rules_disallow_ship_wrap_for_more_than_two_unit_ship
-    
+    rules = Rules.new
+    board = Board.new(12)
+    player = Player.new([2, 3, 4, 5])
+    start_space_1 = "A1"
+    end_space_1 = "A12"
+    end_space_2 = "A3"
+    ship_1 = player.fleet[1]
+
+    refute rules.longer_than_two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_1)
+    assert rules.longer_than_two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_2)
   end
 
+  def test_it_knows_if_start_and_end_coordinates_are_valid
+    rules = Rules.new
+    board = Board.new(12)
+    invalid_space1 = "!"
+    invalid_space2 = "A"
+    invalid_space3 = "0"
+    invalid_space4 = " "
+    invalid_space5 = ""
+    invalid_space6 = "A100"
+    invalid_space7 = "9B"
+    invalid_space8 = "z12"
+    valid_spaces = ["A1", "A2", "A3", "A4"]
+
+    refute rules.both_coordinates_valid?(board, invalid_space1, valid_spaces[0])
+    refute rules.both_coordinates_valid?(board, valid_spaces[1],invalid_space2)
+    refute rules.both_coordinates_valid?(board, invalid_space3, invalid_space4)
+    refute rules.both_coordinates_valid?(board, invalid_space5, invalid_space6)
+    refute rules.both_coordinates_valid?(board, invalid_space7, invalid_space8)
+    assert rules.both_coordinates_valid?(board, valid_spaces[2], valid_spaces[3])
+  end
 end
