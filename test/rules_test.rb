@@ -47,19 +47,19 @@ class RulesTest < Minitest::Test
 
   end
 
-  def test_rules_disallow_ship_wrap_for_two_unit_ship
-    rules = Rules.new
-    board = Board.new(12)
-    player = Player.new([2, 3, 4, 5])
-    start_space_1 = "A1"
-    end_space_1 = "A12"
-    end_space_2 = "A2"
-    ship_1 = player.fleet[0]
-
-    refute rules.two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_1)
-    rules.two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_2)
-    assert rules.two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_2)
-  end
+  # def test_rules_disallow_ship_wrap_for_two_unit_ship
+  #   rules = Rules.new
+  #   board = Board.new(12)
+  #   player = Player.new([2, 3, 4, 5])
+  #   start_space_1 = "A1"
+  #   end_space_1 = "A12"
+  #   end_space_2 = "A2"
+  #   ship_1 = player.fleet[0]
+  #
+  #   refute rules.two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_1)
+  #   rules.two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_2)
+  #   assert rules.two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_2)
+  # end
 
   def test_rules_disallow_diagonal_placement
     rules = Rules.new
@@ -79,18 +79,18 @@ class RulesTest < Minitest::Test
 
   end
 
-  def test_rules_disallow_ship_wrap_for_more_than_two_unit_ship
-    rules = Rules.new
-    board = Board.new(12)
-    player = Player.new([2, 3, 4, 5])
-    start_space_1 = "A1"
-    end_space_1 = "A12"
-    end_space_2 = "A3"
-    ship_1 = player.fleet[1]
-
-    refute rules.longer_than_two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_1)
-    assert rules.longer_than_two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_2)
-  end
+  # def test_rules_disallow_ship_wrap_for_more_than_two_unit_ship
+  #   rules = Rules.new
+  #   board = Board.new(12)
+  #   player = Player.new([2, 3, 4, 5])
+  #   start_space_1 = "A1"
+  #   end_space_1 = "A12"
+  #   end_space_2 = "A3"
+  #   ship_1 = player.fleet[1]
+  #
+  #   refute rules.longer_than_two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_1)
+  #   assert rules.longer_than_two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_2)
+  # end
 
   def test_it_knows_if_start_and_end_coordinates_are_valid
     rules = Rules.new
@@ -112,4 +112,62 @@ class RulesTest < Minitest::Test
     refute rules.both_coordinates_valid?(board, invalid_space7, invalid_space8)
     assert rules.both_coordinates_valid?(board, valid_spaces[2], valid_spaces[3])
   end
+
+  def test_length_compliance?
+    rules = Rules.new
+    board = Board.new(12)
+    ship2 = Ship.new(2)
+    ship3 = Ship.new(3)
+    ship4 = Ship.new(4)
+    ship5 = Ship.new(5)
+    start_space_1 = "A1"
+    end_space_1 = "A2"
+    start_space_2 = "B3"
+    end_space_2 = "D3"
+    start_space_3 = "C1"
+    end_space_3 = "C2"
+    start_space_4 = "D4"
+    end_space_4 = "F4"
+    start_space_5 = "L12"
+    end_space_5 = "H12"
+
+    assert rules.length_compliance?(board, ship2, start_space_1, end_space_1)
+    assert rules.length_compliance?(board, ship3, start_space_2, end_space_2)
+    refute rules.length_compliance?(board, ship4, start_space_3, end_space_3)
+    assert rules.length_compliance?(board, ship3, start_space_4, end_space_4)
+    refute rules.length_compliance?(board, ship4, start_space_4, end_space_4)
+    assert rules.length_compliance?(board, ship5, start_space_5, end_space_5)
+  end
+
+  def test_wrap_compliance
+    skip
+    rules = Rules.new
+    board = Board.new(12)
+    ship2 = Ship.new(2)
+    ship3 = Ship.new(3)
+    ship4 = Ship.new(4)
+    # ship5 = Ship.new(5)
+    space1a = "A1"
+    space2a = "A2"
+    space1b = "B1"
+    space2b = "B12"
+    space1c = "K12"
+    space2c = "K10"
+    space1d = "K12"
+    space2d = "K2"
+    space1e = "C1"
+    space2e = "G1"
+    space1f = "C1"
+    space2f = "A1"
+
+    assert rules.wrap_compliance?(board, ship2, space1a, space2a)
+    refute rules.wrap_compliance?(board, ship2, space1b, space2b)
+
+    assert rules.wrap_compliance?(board, ship3, space1c, space2c)
+    refute rules.wrap_compliance?(board, ship3, space1d, space2d)
+
+    assert rules.wrap_compliance?(board, ship4, space1e, space2e)
+    refute rules.wrap_compliance?(board, ship4, space1f, space2f)
+  end
+
 end

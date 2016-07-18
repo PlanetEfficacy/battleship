@@ -110,7 +110,35 @@ class Board
     get_column(coordinate1) == get_column(coordinate2)
   end
 
-  def get_inner_spaces(coordinate1, coordinate2)
+  def get_spaces_between(coordinate1, coordinate2)
+    return get_row_spaces_between(coordinate1, coordinate2) if same_row?(coordinate1, coordinate2)
+    return get_column_spaces_between(coordinate1, coordinate2) if same_column?(coordinate1, coordinate2)
+  end
+
+  def get_row_spaces_between(coordinate1, coordinate2)
+    columns = (get_smaller_column(coordinate1, coordinate2)..get_bigger_column(coordinate1, coordinate2)).to_a
+    columns.map { |column| get_row(coordinate1) + column }
+  end
+
+  def get_column_spaces_between(coordinate1, coordinate2)
+    rows = (get_smaller_row(coordinate1, coordinate2)..get_bigger_row(coordinate1, coordinate2)).to_a
+    rows.map { |row| row + get_column(coordinate1) }
+  end
+
+  def get_bigger_column(coordinate1, coordinate2)
+    get_column(coordinate1).to_i > get_column(coordinate2).to_i ? get_column(coordinate1) : get_column(coordinate2)
+  end
+
+  def get_smaller_column(coordinate1, coordinate2)
+    get_column(coordinate1).to_i < get_column(coordinate2).to_i ? get_column(coordinate1) : get_column(coordinate2)
+  end
+
+  def get_bigger_row(coordinate1, coordinate2)
+    get_row(coordinate1) > get_row(coordinate2) ? get_row(coordinate1) : get_row(coordinate2)
+  end
+
+  def get_smaller_row(coordinate1, coordinate2)
+    get_row(coordinate1) < get_row(coordinate2) ? get_row(coordinate1) : get_row(coordinate2)
   end
 
   def get_row(coordinate)
