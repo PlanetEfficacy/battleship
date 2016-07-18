@@ -61,5 +61,7 @@ class RulesTest < Minitest::Test
   end
 
   def test_rules_disallow_ship_wrap_for_more_than_two_unit_ship
+    
   end
+
 end

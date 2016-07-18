@@ -121,4 +121,17 @@ class Board
     coordinate[1..-1]
   end
 
+  def get_horizontal_length(coordinate1, coordinate2)
+    return false if !same_row?(coordinate1, coordinate2)
+    column1 = get_column(coordinate1).to_i
+    column2 = get_column(coordinate2).to_i
+    column1 > column2 ? (column1 - column2) + 1 : (column2 - column1) + 1
+  end
+
+  def get_vertical_length(coordinate1, coordinate2)
+    return false if !same_column?(coordinate1, coordinate2)
+    row1 = get_row_letters.index(get_row(coordinate1))
+    row2 = get_row_letters.index(get_row(coordinate2))
+    row1 > row2 ? (row1 - row2) + 1 : (row2 - row1) + 1
+  end
 end

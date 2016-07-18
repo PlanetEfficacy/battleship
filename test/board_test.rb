@@ -506,4 +506,24 @@ class BoardTest < Minitest::Test
     assert_equal "4", b1.get_column("D4")
   end
 
+  def test_it_knows_the_distance_between_two_coordinates_in_the_same_row
+    b3 = Board.new(12)
+
+    assert_equal 12, b3.get_horizontal_length("K1", "K12")
+    assert_equal 2, b3.get_horizontal_length("A1", "A2")
+    assert_equal 5, b3.get_horizontal_length("H8", "H4")
+    assert_equal false, b3.get_horizontal_length("K1", "L12")
+    assert_equal 1, b3.get_horizontal_length("K1", "K1")
+  end
+
+  def test_it_knows_the_distance_between_two_coordinates_in_the_same_column
+    b3 = Board.new(12)
+
+    assert_equal 12, b3.get_vertical_length("A12", "L12")
+    assert_equal 2, b3.get_vertical_length("C2", "B2")
+    assert_equal 5, b3.get_vertical_length("D4", "H4")
+    assert_equal false, b3.get_vertical_length("K1", "L12")
+    assert_equal 1, b3.get_vertical_length("K1", "K1")
+  end
+
 end
