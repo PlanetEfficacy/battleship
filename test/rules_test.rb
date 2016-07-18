@@ -139,35 +139,4 @@ class RulesTest < Minitest::Test
     assert rules.length_compliance?(board, ship5, start_space_5, end_space_5)
   end
 
-  def test_wrap_compliance
-    skip
-    rules = Rules.new
-    board = Board.new(12)
-    ship2 = Ship.new(2)
-    ship3 = Ship.new(3)
-    ship4 = Ship.new(4)
-    # ship5 = Ship.new(5)
-    space1a = "A1"
-    space2a = "A2"
-    space1b = "B1"
-    space2b = "B12"
-    space1c = "K12"
-    space2c = "K10"
-    space1d = "K12"
-    space2d = "K2"
-    space1e = "C1"
-    space2e = "G1"
-    space1f = "C1"
-    space2f = "A1"
-
-    assert rules.wrap_compliance?(board, ship2, space1a, space2a)
-    refute rules.wrap_compliance?(board, ship2, space1b, space2b)
-
-    assert rules.wrap_compliance?(board, ship3, space1c, space2c)
-    refute rules.wrap_compliance?(board, ship3, space1d, space2d)
-
-    assert rules.wrap_compliance?(board, ship4, space1e, space2e)
-    refute rules.wrap_compliance?(board, ship4, space1f, space2f)
-  end
-
 end

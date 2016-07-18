@@ -1,4 +1,6 @@
 require './lib/ship'
+require './lib/board'
+
 class Player
   attr_reader :shots_fired,
               :winner,
@@ -30,9 +32,9 @@ class Player
     @fleet = @ships.map { |length| Ship.new(length) }
   end
 
-  def place_ship(ship, start_space, end_space)
-    #NEEDS VALIDATION
+  def place_ship(board, ship, start_space, end_space)
     ship.place(start_space, end_space)
+    board.set_spaces_occupied(start_space, end_space)
   end
 
 

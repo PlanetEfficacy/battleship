@@ -1,7 +1,8 @@
 class Space
-  attr_reader :coordinates,
-              :occupied,
-              :attacked
+  attr_reader :coordinates
+
+  attr_accessor :occupied,
+                :attacked
 
   def initialize(coordinates)
     @coordinates = coordinates

@@ -102,6 +102,9 @@ class PlayerTest < Minitest::Test
     p1 = Player.new([2, 3])
     p2 = Player.new([2, 3, 4])
     p3 = Player.new([2, 3, 4, 5])
+
+    b1 = Board.new(12)
+
     expected1_start = "A1"
     expected1_end = "B1"
     expected2_start = "C5"
@@ -110,17 +113,17 @@ class PlayerTest < Minitest::Test
     expected3_end = "K7"
 
     ship1a = p1.fleet[0]
-    p1.place_ship(ship1a, "A1", "B1")
+    p1.place_ship(b1, ship1a, "A1", "B1")
     actual1_start = ship1a.start_space
     actual1_end = ship1a.end_space
 
     ship2a = p2.fleet[1]
-    p2.place_ship(ship2a, "C5", "C7")
+    p2.place_ship(b1, ship2a, "C5", "C7")
     actual2_start = ship2a.start_space
     actual2_end = ship2a.end_space
 
     ship3a = p3.fleet[3]
-    p3.place_ship(ship3a, "K12", "K7")
+    p3.place_ship(b1, ship3a, "K12", "K7")
     actual3_start = ship3a.start_space
     actual3_end = ship3a.end_space
 
@@ -132,6 +135,24 @@ class PlayerTest < Minitest::Test
 
     assert_equal expected3_start, actual3_start
     assert_equal expected3_end, actual3_end
+  end
+
+  def test_after_a_player_places_a_ship_the_ship_occupies_space_on_the_board
+    p1 = Player.new([2, 3])
+    ship1 = Ship.new(2)
+    b1 = Board.new(4)
+
+    refute b1.space_occupied?("A1")
+    refute b1.space_occupied?("A2")
+    refute b1.space_occupied?("A3")
+
+    p1.place_ship(b1, ship1, "A1", "A2")
+
+    assert b1.space_occupied?("A1")
+    assert b1.space_occupied?("A2")
+    refute b1.space_occupied?("A3")
+
+
   end
 
 end
