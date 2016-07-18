@@ -45,44 +45,44 @@ class Board
     end
   end
 
-  def has_north_neighbor?(coordinates)
-    get_row_letters.index(coordinates.split('')[0]) > 0
+  def has_north_neighbor?(coordinate)
+    get_row_letters.index(get_row(coordinate)) > 0
   end
 
-  def has_south_neighbor?(coordinates)
-    get_row_letters.index(coordinates.split('')[0]) < @length - 1
+  def has_south_neighbor?(coordinate)
+    get_row_letters.index(get_row(coordinate)) < @length - 1
   end
 
-  def has_east_neighbor?(coordinates)
-    (coordinates[1..-1].to_i > 0) && (coordinates[1..-1].to_i < @length)
+  def has_east_neighbor?(coordinate)
+    (coordinate[1..-1].to_i > 0) && (coordinate[1..-1].to_i < @length)
   end
 
-  def has_west_neighbor?(coordinates)
-    coordinates[1..-1].to_i > 1
+  def has_west_neighbor?(coordinate)
+    coordinate[1..-1].to_i > 1
   end
 
-  def get_north_neighbor(coordinates)
-    get_row_letters[get_row_letters.index(coordinates.split('')[0]) - 1] + coordinates[1..-1]
+  def get_north_neighbor(coordinate)
+    get_row_letters[get_row_letters.index(get_row(coordinate)) - 1] + get_column(coordinate)
   end
 
-  def get_south_neighbor(coordinates)
-    get_row_letters[get_row_letters.index(coordinates.split('')[0]) + 1] + coordinates[1..-1]
+  def get_south_neighbor(coordinate)
+    get_row_letters[get_row_letters.index(get_row(coordinate)) + 1] + get_column(coordinate)
   end
 
-  def get_east_neighbor(coordinates)
-    coordinates.split('')[0] + (coordinates[1..-1].to_i + 1).to_s
+  def get_east_neighbor(coordinate)
+    get_row(coordinate) + (get_column(coordinate).to_i + 1).to_s
   end
 
-  def get_west_neighbor(coordinates)
-    coordinates.split('')[0] + (coordinates[1..-1].to_i - 1).to_s
+  def get_west_neighbor(coordinate)
+    get_row(coordinate) + (get_column(coordinate).to_i - 1).to_s
   end
 
-  def neighbors(coordinates)
+  def neighbors(coordinate)
     neighbors = []
-    neighbors << get_north_neighbor(coordinates) if has_north_neighbor?(coordinates)
-    neighbors << get_east_neighbor(coordinates) if has_east_neighbor?(coordinates)
-    neighbors << get_south_neighbor(coordinates) if has_south_neighbor?(coordinates)
-    neighbors << get_west_neighbor(coordinates) if has_west_neighbor?(coordinates)
+    neighbors << get_north_neighbor(coordinate) if has_north_neighbor?(coordinate)
+    neighbors << get_east_neighbor(coordinate) if has_east_neighbor?(coordinate)
+    neighbors << get_south_neighbor(coordinate) if has_south_neighbor?(coordinate)
+    neighbors << get_west_neighbor(coordinate) if has_west_neighbor?(coordinate)
     return neighbors
   end
 
@@ -96,6 +96,29 @@ class Board
 
   def contains?(coordinates)
     create_space_names.include?(coordinates)
+  end
+
+  def neighbors?(coordinate1, coordinate2)
+    neighbors(coordinate1).include?(coordinate2)
+  end
+
+  def same_row?(coordinate1, coordinate2)
+    get_row(coordinate1) == get_row(coordinate2)
+  end
+
+  def same_column?(coordinate1, coordinate2)
+    get_column(coordinate1) == get_column(coordinate2)
+  end
+
+  def get_inner_spaces(coordinate1, coordinate2)
+  end
+
+  def get_row(coordinate)
+    coordinate.split("")[0]
+  end
+
+  def get_column(coordinate)
+    coordinate[1..-1]
   end
 
 end

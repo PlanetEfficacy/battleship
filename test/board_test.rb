@@ -446,4 +446,64 @@ class BoardTest < Minitest::Test
 
   end
 
+  def test_it_knows_if_two_coordinates_are_neighbors
+    b1 = Board.new(4)
+    b2 = Board.new(8)
+    b3 = Board.new(12)
+
+    assert b1.neighbors?("C2", "C1")
+    assert b1.neighbors?("A1", "B1")
+    refute b1.neighbors?("A1", "A7")
+    assert b2.neighbors?("D3", "E3")
+    refute b2.neighbors?("F5", "F3")
+    refute b2.neighbors?("F5", "A5")
+    assert b3.neighbors?("L12", "K12")
+    refute b3.neighbors?("K1", "A1")
+  end
+
+  def test_it_knows_the_spaces_between_two_coordinates_in_the_same_row_or_column
+  end
+
+  def test_it_knows_if_two_coordinates_are_in_the_same_row
+    b1 = Board.new(4)
+    b2 = Board.new(8)
+    b3 = Board.new(12)
+
+    assert b1.same_row?("A1", "A4")
+    refute b1.same_row?("B1", "C4")
+    assert b2.same_row?("E5", "E2")
+    refute b2.same_row?("H1", "D1")
+    assert b3.same_row?("K12", "K1")
+    refute b3.same_row?("L1", "A1")
+  end
+
+  def test_it_knows_if_two_coordinates_are_in_the_same_column
+    b1 = Board.new(4)
+    b2 = Board.new(8)
+    b3 = Board.new(12)
+
+    assert b1.same_column?("A1", "D1")
+    refute b1.same_column?("B1", "C4")
+    assert b2.same_column?("E5", "D5")
+    refute b2.same_column?("H1", "H4")
+    assert b3.same_column?("A12", "K12")
+    refute b3.same_column?("L2", "A1")
+  end
+
+  def test_it_knows_a_coordinates_row
+    b1 = Board.new(4)
+    assert_equal "A", b1.get_row("A1")
+    assert_equal "B", b1.get_row("B2")
+    assert_equal "C", b1.get_row("C3")
+    assert_equal "D", b1.get_row("D4")
+  end
+
+  def test_it_knows_a_coordinates_column
+    b1 = Board.new(4)
+    assert_equal "1", b1.get_column("A1")
+    assert_equal "2", b1.get_column("B2")
+    assert_equal "3", b1.get_column("C3")
+    assert_equal "4", b1.get_column("D4")
+  end
+
 end
