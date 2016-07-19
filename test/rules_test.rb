@@ -47,20 +47,6 @@ class RulesTest < Minitest::Test
 
   end
 
-  # def test_rules_disallow_ship_wrap_for_two_unit_ship
-  #   rules = Rules.new
-  #   board = Board.new(12)
-  #   player = Player.new([2, 3, 4, 5])
-  #   start_space_1 = "A1"
-  #   end_space_1 = "A12"
-  #   end_space_2 = "A2"
-  #   ship_1 = player.fleet[0]
-  #
-  #   refute rules.two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_1)
-  #   rules.two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_2)
-  #   assert rules.two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_2)
-  # end
-
   def test_rules_disallow_diagonal_placement
     rules = Rules.new
     board = Board.new(12)
@@ -78,19 +64,6 @@ class RulesTest < Minitest::Test
     assert rules.diagonal_placement_compliance?(board, ship_1, start_space_1, valid_end_space_2)
 
   end
-
-  # def test_rules_disallow_ship_wrap_for_more_than_two_unit_ship
-  #   rules = Rules.new
-  #   board = Board.new(12)
-  #   player = Player.new([2, 3, 4, 5])
-  #   start_space_1 = "A1"
-  #   end_space_1 = "A12"
-  #   end_space_2 = "A3"
-  #   ship_1 = player.fleet[1]
-  #
-  #   refute rules.longer_than_two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_1)
-  #   assert rules.longer_than_two_unit_ship_wrap_compliance?(board, ship_1, start_space_1, end_space_2)
-  # end
 
   def test_it_knows_if_start_and_end_coordinates_are_valid
     rules = Rules.new
@@ -163,5 +136,34 @@ class RulesTest < Minitest::Test
     assert_equal true, rules.ship_overlap_compliance?(b2, s5, "A1", "E1")
   end
 
-  
+  def test_virgin_attack_compliance
+    rules = Rules.new
+    b1 = Board.new(4)
+    p1 = Player.new([2,3])
+    expected1 = false
+    expected2 = true
+
+    actual1 = rules.virgin_attack_compliance?(b1, "A1")
+    p1.attack(b1, "A1")
+    actual2 = rules.virgin_attack_compliance?(b1, "A1")
+
+    assert_equal expected1, actual1
+    assert_equal expected2, actual2
+  end
+
+  def test_game_is_over
+    rules = Rules.new
+    p1 = Player.new([1])
+    p2 = Player.new([1])
+    expected1 = false
+    expected2 = true
+
+    actual1 = rules.game_is_over?(p1, p2)
+    p1.get_ship(1).hit
+    actual2 = rules.game_is_over?(p1, p2)
+
+    assert_equal expected1, actual1
+    assert_equal expected2, actual2
+  end
+
 end

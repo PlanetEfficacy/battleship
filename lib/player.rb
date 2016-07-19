@@ -3,13 +3,12 @@ require './lib/board'
 
 class Player
   attr_reader :shots_fired,
-              :winner,
+              :is_loser,
               :known_spaces,
               :fleet
 
   def initialize(ship_types)
     @shots_fired = 0
-    @winner = false
     @known_spaces = []
     @ships = ship_types
     @fleet = []
@@ -44,6 +43,10 @@ class Player
   def attack(board, coordinate)
     fire
     board.set_space_attacked(coordinate)
+  end
+
+  def check_if_game_is_lost
+    fleet.all? { |ship| ship.is_sunk? }
   end
 
 end

@@ -32,4 +32,12 @@ class Rules
     spaces_to_check.none? { |coordinate| board.space_occupied?(coordinate) }
   end
 
+  def virgin_attack_compliance?(board, coordinate)
+    v1 = board.space_attacked?(coordinate)
+  end
+
+  def game_is_over?(player1, player2)
+    player1.check_if_game_is_lost || player2.check_if_game_is_lost
+  end
+
 end

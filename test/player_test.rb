@@ -7,11 +7,6 @@ class PlayerTest < Minitest::Test
     assert_equal 0, p1.shots_fired
   end
 
-  def test_player_starts_not_winning_the_game
-    p1 = Player.new([2, 3])
-    refute p1.winner
-  end
-
   def test_player_starts_not_knowing_any_spaces
     p1 = Player.new([2, 3])
     assert_equal [], p1.known_spaces
@@ -177,6 +172,29 @@ class PlayerTest < Minitest::Test
     assert b1.space_attacked?("A1")
     assert b1.space_attacked?("A2")
     refute b1.space_attacked?("A3")
+  end
+
+  def test_player_knows_if_they_have_lost
+    p1 = Player.new([2, 3])
+    s2 = p1.get_ship(2)
+    s3 = p1.get_ship(3)
+    expected1 = false
+    expected2 = false
+    expected3 = false
+    expected4 = true
+
+    actual1 = p1.check_if_game_is_lost
+    2.times { s2.hit }
+    actual2 = p1.check_if_game_is_lost
+    2.times { s3.hit }
+    actual3 = p1.check_if_game_is_lost
+    s3.hit
+    actual4 = p1.check_if_game_is_lost
+
+    assert_equal expected1, actual1
+    assert_equal expected2, actual2
+    assert_equal expected3, actual3
+    assert_equal expected4, actual4
   end
 
 end
