@@ -3,23 +3,34 @@
     "coverage": {
       "/Users/JesseSpevack/turing/1module/battleship/lib/display.rb": [
         1,
-        1,
-        5,
-        69,
-        5,
-        null,
-        null,
-        1,
-        32,
-        null,
         null,
         1,
         5,
+        null,
+        null,
+        1,
+        224,
+        null,
+        null,
+        1,
+        209,
+        null,
+        null,
+        1,
+        4,
+        40,
+        4,
+        null,
+        null,
+        1,
+        13,
+        null,
+        null,
         null,
         null
       ]
     },
-    "timestamp": 1468940257
+    "timestamp": 1468958975
   },
   "RSpec": {
     "coverage": {
@@ -235,6 +246,52 @@
         7763,
         7763,
         null,
+        null,
+        null
+      ],
+      "/Users/JesseSpevack/turing/1module/battleship/test/display_test.rb": [
+        1,
+        1,
+        null,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        1,
+        null,
+        null
+      ],
+      "/Users/JesseSpevack/turing/1module/battleship/lib/display.rb": [
+        1,
+        1,
+        5,
+        69,
+        5,
+        null,
+        null,
+        1,
+        32,
+        null,
+        null,
+        1,
+        5,
         null,
         null
       ],
@@ -883,6 +940,6 @@
         1
       ]
     },
-    "timestamp": 1468898011
+    "timestamp": 1468940282
   }
 }
