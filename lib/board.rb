@@ -186,4 +186,13 @@ class Board
       set_space_occupied(coordinate)
     end
   end
+
+  def space_attacked?(coordinate)
+    get_space(coordinate).attacked
+  end
+
+  def set_space_attacked(coordinate)
+    get_space(coordinate).attacked = true
+  end
+
 end

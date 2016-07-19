@@ -41,4 +41,9 @@ class Player
     board.set_spaces_occupied(start_space, end_space)
   end
 
+  def attack(board, coordinate)
+    fire
+    board.set_space_attacked(coordinate)
+  end
+
 end

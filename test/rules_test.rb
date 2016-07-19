@@ -163,4 +163,5 @@ class RulesTest < Minitest::Test
     assert_equal true, rules.ship_overlap_compliance?(b2, s5, "A1", "E1")
   end
 
+  
 end

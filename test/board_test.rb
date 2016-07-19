@@ -779,4 +779,46 @@ class BoardTest < Minitest::Test
     assert_equal false, b1.space_occupied?("D4")
     assert_equal false, b1.space_occupied?("D1")
   end
+
+  def test_it_knows_if_a_space_is_not_attacked
+    b1 = Board.new(4)
+
+    assert_equal false, b1.space_attacked?("A1")
+    assert_equal false, b1.space_attacked?("A2")
+    assert_equal false, b1.space_attacked?("A3")
+    assert_equal false, b1.space_attacked?("A4")
+    assert_equal false, b1.space_attacked?("B1")
+    assert_equal false, b1.space_attacked?("B2")
+    assert_equal false, b1.space_attacked?("B3")
+    assert_equal false, b1.space_attacked?("B4")
+    assert_equal false, b1.space_attacked?("C1")
+    assert_equal false, b1.space_attacked?("C2")
+    assert_equal false, b1.space_attacked?("C3")
+    assert_equal false, b1.space_attacked?("C4")
+    assert_equal false, b1.space_attacked?("D1")
+    assert_equal false, b1.space_attacked?("D2")
+    assert_equal false, b1.space_attacked?("D3")
+    assert_equal false, b1.space_attacked?("D4")
+  end
+
+  def test_it_can_set_a_space_to_attacked
+    b1 = Board.new(4)
+    coordinate = "A1"
+    coordinate2 = "B2"
+    expected_initial = false
+    expected_final = true
+
+    actual_initial = b1.space_attacked?(coordinate)
+    b1.set_space_attacked(coordinate)
+    actual_final = b1.space_attacked?(coordinate)
+
+    actual_initial2 = b1.space_attacked?(coordinate2)
+    b1.set_space_attacked(coordinate2)
+    actual_final2 = b1.space_attacked?(coordinate2)
+
+    assert_equal expected_initial, actual_initial
+    assert_equal expected_final, actual_final
+    assert_equal expected_initial, actual_initial2
+    assert_equal expected_final, actual_final2
+  end
 end

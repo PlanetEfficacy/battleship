@@ -162,4 +162,21 @@ class PlayerTest < Minitest::Test
     assert_equal 3, ship3.length
   end
 
+  def test_after_a_player_attacks_the_space_is_designated_attacked_on_the_board
+    p1 = Player.new([2, 3])
+    ship1 = Ship.new(2)
+    b1 = Board.new(4)
+
+    refute b1.space_attacked?("A1")
+    refute b1.space_attacked?("A2")
+    refute b1.space_attacked?("A3")
+
+    p1.attack(b1, "A1")
+    p1.attack(b1, "A2")
+
+    assert b1.space_attacked?("A1")
+    assert b1.space_attacked?("A2")
+    refute b1.space_attacked?("A3")
+  end
+
 end
