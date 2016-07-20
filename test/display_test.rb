@@ -1,30 +1,27 @@
 require './test/test_helper'
 require './lib/display'
+require './lib/board'
 
 class DisplayTest < Minitest::Test
-
+  include Display
   def test_it_creates_a_row
-    d = Display.new
-    assert_equal "A  M  M  M  M  M  M  M  M  M  M  M  M", d.row(["A","M","M","M","M","M","M","M","M","M","M","M","M"])
-    assert_equal "B  M     M     M     M     M     M", d.row(["B","M","","M","","M","","M","","M","","M",""])
-    assert_equal "C     M     M     M     M     M     M", d.row(["C","","M","","M","","M","","M","","M","","M"])
-    assert_equal "D", d.row(["D","","","","","","","","","","","",""])
+    assert_equal "A  M  M  M  M  M  M  M  M  M  M  M  M", row(["A","M","M","M","M","M","M","M","M","M","M","M","M"])
+    assert_equal "B  M     M     M     M     M     M", row(["B","M","","M","","M","","M","","M","","M",""])
+    assert_equal "C     M     M     M     M     M     M", row(["C","","M","","M","","M","","M","","M","","M"])
+    assert_equal "D", row(["D","","","","","","","","","","","",""])
   end
 
   def test_blank_cells_converted_to_space
-    d = Display.new
-    assert_equal "   ", d.parse_blank("")
+    assert_equal "   ", parse_blank("")
   end
 
   def test_it_displays_header
-    d = Display.new
-    assert_equal ".  1  2  3  4", d.header(4)
-    assert_equal ".  1  2  3  4  5  6  7  8", d.header(8)
-    assert_equal ".  1  2  3  4  5  6  7  8  9  10 11 12", d.header(12)
+    assert_equal ".  1  2  3  4", header(4)
+    assert_equal ".  1  2  3  4  5  6  7  8", header(8)
+    assert_equal ".  1  2  3  4  5  6  7  8  9  10 11 12", header(12)
   end
 
   def test_it_displays_grid
-    d = Display.new
     expected = "========================================\n"
     expected += ".  1  2  3  4  5  6  7  8  9  10 11 12\n"
     expected += "A     M     M     M     M     M     M\n"
@@ -53,20 +50,39 @@ class DisplayTest < Minitest::Test
     rowj = ["J","M","","M","","M","","M","","M","","M",""]
     rowk = ["K","","M","","M","","M","","M","","M","","M"]
     rowl = ["L","M","","M","","M","","M","","M","","M",""]
-    actual = d.display_grid(12, rowa, rowb, rowc, rowd, rowe, rowf, rowg, rowh, rowi, rowj, rowk, rowl)
+    actual = display_grid(12, rowa, rowb, rowc, rowd, rowe, rowf, rowg, rowh, rowi, rowj, rowk, rowl)
 
     assert_equal expected, actual
   end
 
   def test_it_can_make_a_short_border
-    d = Display.new
-    assert_equal "================", d.border(4)
-    assert_equal "============================", d.border(8)
+    assert_equal "================", border(4)
+    assert_equal "============================", border(8)
   end
 
   def test_it_can_make_a_long_border
-    d = Display.new
-    assert_equal "========================================", d.border(12)
+    assert_equal "========================================", border(12)
   end
 
+  def test_it_can_get_row_data
+    skip
+    b1 = Board.new(4)
+    expected = [["A","","","",""],
+                ["B","","","",""],
+                ["C","","","",""],
+                ["D","","","",""]]
+    actual = get_rows_data(b1)
+    assert_equal expected, actual
+  end
+
+  def test_evaluates_attacked_and_occupied_to_H
+    b1 = Board.new(4)
+    expected = true
+    b1.set_space_occupied("A1")
+    b1.set_space_attacked("A1")
+
+    actual = contains_hit?(b1, "A1")
+
+    assert_equal expected, actual
+  end
 end

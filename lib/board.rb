@@ -111,4 +111,13 @@ class Board
     get_space(coordinate).attacked = true
   end
 
+  def contains_hit?(coordinate)
+    space_attacked?(coordinate) && space_occupied?(coordinate)
+  end
+
+  def contains_miss?(coordinate)
+    space_attacked?(coordinate) && !space_occupied?(coordinate)
+  end
+
+
 end

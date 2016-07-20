@@ -466,4 +466,34 @@ class BoardTest < Minitest::Test
     assert_equal expected_initial, actual_initial2
     assert_equal expected_final, actual_final2
   end
+
+  def test_it_knows_if_coordinate_contains_hit
+    b1 = Board.new(4)
+    coordinate = "A1"
+    coordinate2 = "B2"
+    coordinate3 = "A2"
+
+    b1.set_space_attacked(coordinate)
+    b1.set_space_occupied(coordinate)
+    b1.set_space_attacked(coordinate2)
+
+    assert b1.contains_hit?(coordinate)
+    refute b1.contains_hit?(coordinate2)
+    refute b1.contains_hit?(coordinate3)
+  end
+
+  def test_it_knows_if_coordinate_contains_miss
+    b1 = Board.new(4)
+    coordinate = "A1"
+    coordinate2 = "B2"
+    coordinate3 = "A2"
+
+    b1.set_space_attacked(coordinate)
+    b1.set_space_occupied(coordinate)
+    b1.set_space_attacked(coordinate2)
+
+    refute b1.contains_miss?(coordinate)
+    assert b1.contains_miss?(coordinate2)
+    refute b1.contains_miss?(coordinate3)
+  end
 end
