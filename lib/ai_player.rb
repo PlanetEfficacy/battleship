@@ -27,13 +27,32 @@ class AiPlayer < Player
   end
 
   def pick_unoccupied(board)
-     picks = pick_exhaustive(board)
-     picks.find { |coordinate| !board.space_occupied?(coordinate) }
+     pick_exhaustive(board).find { |coordinate| !board.space_occupied?(coordinate) }
   end
 
   def pick_unattacked(board)
     picks = pick_exhaustive(board)
-    picks.find { |coordinate| !board.space_attacked?(coordinate)}
+    picks.find { |coordinate| !board.space_attacked?(coordinate) }
+  end
+
+  def pick_x_units_vertically(board, coordinate1, distance)
+    pick_exhaustive(board).find do |coordinate2|
+      !board.space_occupied?(coordinate2) && board.get_vertical_length(coordinate1, coordinate2) == distance
+    end
+  end
+
+  def pick_x_units_horizontally(board, coordinate1, distance)
+    pick_exhaustive(board).find do |coordinate2|
+      !board.space_occupied?(coordinate2) && board.get_horizontal_length(coordinate1, coordinate2) == distance
+    end
+  end
+
+  def pick_x_units(board, coordinate1, distance)
+    if [true, false].sample
+      pick_x_units_horizontally(board, coordinate1, distance) || pick_x_units_vertically(board, coordinate1, distance)
+    else
+      pick_x_units_vertically(board, coordinate1, distance) || pick_x_units_horizontally(board, coordinate1, distance)
+    end
   end
 
 end

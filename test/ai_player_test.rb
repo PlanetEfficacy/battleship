@@ -3,15 +3,14 @@ require './lib/ai_player'
 
 class AiPlayerTest < Minitest::Test
 
-  def test_ai_can_pick_random_spot
-
+  def test_ai_can_pick_random_space
     ai = AiPlayer.new([2, 3])
     board = Board.new(4)
     coordinates = ai.pick(board)
     assert board.contains?(coordinates)
   end
 
-  def test_ai_can_pick_all_spots_on_board_without_repeating
+  def test_ai_can_pick_all_spaces_on_board_without_repeating
     ai = AiPlayer.new([2,3])
     board = Board.new(4)
     pick_history = ai.pick_exhaustive(board).sort
@@ -37,7 +36,7 @@ class AiPlayerTest < Minitest::Test
     assert ai.not_picked_before?("B1", pick_history)
   end
 
-  def test_ai_can_pick_random_unoccupied_spot_on_trivial_board
+  def test_ai_can_pick_random_unoccupied_space_on_trivial_board
     ai = AiPlayer.new([2,3])
     board = Board.new(1)
     expected = "A1"
@@ -46,7 +45,7 @@ class AiPlayerTest < Minitest::Test
     assert_equal expected, actual
   end
 
-  def test_ai_can_pick_random_unoccupied_spot
+  def test_ai_can_pick_random_unoccupied_space
     ai = AiPlayer.new([2,3])
     board = Board.new(4)
     expected = "D4"
@@ -59,7 +58,49 @@ class AiPlayerTest < Minitest::Test
     assert_equal expected, actual
   end
 
-  def test_ai_can_pick_random_unattacked_spot
+  def test_ai_can_pick_random_unoccupied_space_x_units_vertically
+    ai = AiPlayer.new([2,3])
+    board = Board.new(4)
+    expected = ["A1","C1"]
+    expected2 = "D1"
+    actual = ai.pick_x_units_vertically(board, "B1", 2)
+    actual2 = ai.pick_x_units_vertically(board,"A1", 4)
+
+    assert expected.include?(actual)
+    assert expected2, actual2
+  end
+
+  def test_ai_can_pick_random_unoccupied_space_x_units_horizontally
+    ai = AiPlayer.new([2,3])
+    board = Board.new(4)
+    expected = ["B1","B3"]
+    expected2 = "C1"
+    actual = ai.pick_x_units_horizontally(board, "B2", 2)
+    actual2 = ai.pick_x_units_horizontally(board, "C4", 4)
+
+    assert expected.include?(actual)
+    assert expected2, actual2
+  end
+
+  def test_ai_can_pick_random_unoccupied_space_x_units_from_coordinate
+    ai = AiPlayer.new([2,3])
+    board = Board.new(4)
+    expected1 = ["A2", "B3", "C2", "B1"]
+    actual1 = ai.pick_x_units(board, "B2", 2)
+    expected2 = ["C1", "D2"]
+    actual2 = ai.pick_x_units(board, "D1", 2)
+    expected3 = ["C4"]
+    actual3 = ai.pick_x_units(board, "C1", 4)
+    board.set_space_occupied("C4")
+    actual4 = ai.pick_x_units(board, "C1", 4)
+
+    assert expected1.include?(actual1)
+    assert expected2.include?(actual2)
+    assert expected3.include?(actual3)
+    assert_equal nil, actual4
+  end
+
+  def test_ai_can_pick_random_unattacked_space
     ai = AiPlayer.new([2,3])
     board = Board.new(4)
     expected = "C2"
@@ -83,5 +124,5 @@ class AiPlayerTest < Minitest::Test
 
     assert_equal expected, actual
   end
-  
+
 end

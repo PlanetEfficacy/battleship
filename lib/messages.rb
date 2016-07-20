@@ -105,6 +105,10 @@ module Messages
     "Congratulations. You are victorious!"
   end
 
+  def condolences
+    "All Your Battleships Are Belong To Us!"
+  end
+
   def shots_fired_message(shots_fired)
     "Ammunition stores depleated by #{shots_fired} shells."
   end
