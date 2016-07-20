@@ -26,18 +26,17 @@ module Display
     grid = board.board
     rows_data = []
     grid.each do |this_row|
+      row_data = []
       this_row.each do |this_space|
         space = this_space.values[0]
-        rows_data << board.get_row(space.coordinates) if board.get_column(space.coordinates) == "1"
-        rows_data << board.space_attacked?(space.coordinates) && board.space_occupied?(space.coordinates) ? "H" : board.space_attacked?(space.coordinates) ? "M" : ""
-        binding.pry
-        # rows_data << board.get_row(this_row[0][coordinates])
+        row_data << board.get_row(space.coordinates) if board.first_column?(space.coordinates)
+        row_data << "H" if board.contains_hit?(space.coordinates)
+        row_data << "M" if board.contains_miss?(space.coordinates)
+        row_data << "" if !board.space_attacked?(space.coordinates)
       end
+      rows_data << row_data
     end
-  end
-
-  def contains_hit?(board, coordinate)
-    board.space_attacked?(coordinate) && board.space_occupied?(coordinate)
+    rows_data
   end
 
 end

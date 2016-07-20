@@ -1,9 +1,7 @@
 require './lib/messages'
 
 class GameRunner
-  include Messages
-
-  # welcome
+  puts Messages.welcome
 end
 
 

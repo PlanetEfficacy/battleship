@@ -3,6 +3,7 @@ require './lib/game_runner'
 
 class GameRunnerTest < Minitest::Test
   def test_game_runner_outputs_welcome
+    skip
     gr = GameRunner.new
     gr.welcome
   end

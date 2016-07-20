@@ -65,24 +65,31 @@ class DisplayTest < Minitest::Test
   end
 
   def test_it_can_get_row_data
-    skip
     b1 = Board.new(4)
-    expected = [["A","","","",""],
+    b2 = Board.new(4)
+    expected1 = [["A","","","",""],
                 ["B","","","",""],
                 ["C","","","",""],
                 ["D","","","",""]]
-    actual = get_rows_data(b1)
-    assert_equal expected, actual
+    expected2 =[["A","H","M","",""],
+                ["B","H","","M",""],
+                ["C","","H","M",""],
+                ["D","","","",""]]
+    b2.set_space_occupied("A1")
+    b2.set_space_occupied("B1")
+    b2.set_space_occupied("C2")
+    b2.set_space_attacked("A1")
+    b2.set_space_attacked("B1")
+    b2.set_space_attacked("C2")
+    b2.set_space_attacked("A2")
+    b2.set_space_attacked("B3")
+    b2.set_space_attacked("C3")
+
+    actual1 = get_rows_data(b1)
+    actual2 = get_rows_data(b2)
+
+    assert_equal expected1, actual1
+    assert_equal expected2, actual2
   end
 
-  def test_evaluates_attacked_and_occupied_to_H
-    b1 = Board.new(4)
-    expected = true
-    b1.set_space_occupied("A1")
-    b1.set_space_attacked("A1")
-
-    actual = contains_hit?(b1, "A1")
-
-    assert_equal expected, actual
-  end
 end
