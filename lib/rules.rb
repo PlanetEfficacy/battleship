@@ -2,7 +2,7 @@ require './lib/board'
 require './lib/ship'
 require './lib/player'
 
-class Rules
+module Rules
 
   def valid_space?(board, coordinates)
     board.contains?(coordinates)

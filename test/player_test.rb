@@ -196,5 +196,5 @@ class PlayerTest < Minitest::Test
     assert_equal expected3, actual3
     assert_equal expected4, actual4
   end
-
+  
 end

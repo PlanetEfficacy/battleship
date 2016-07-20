@@ -1,4 +1,5 @@
-class Messages
+module Messages
+
   def welcome
     "Welcome to BATTLESHIP"
   end
