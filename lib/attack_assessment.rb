@@ -14,21 +14,5 @@ module AttackAssessment
       ship_spaces.include?(coordinate)
     end
   end
-
-  def attack_sequence
-  # Prompt player for coordinate to attack / get unattacked coordinate
-  # Player Attacks a coordinate on the opposing players board
-  # AttackAssessment hit?(opposing player's board, selected coordinate)
-    # True
-      # put ship hit message
-      # Get ship by coordinate
-      # Ship.hit
-      # Ship.is_sunk?
-        # True
-          # put ship sunk message
-    # False
-      # put ship miss message
-
-    end
-
+  
 end

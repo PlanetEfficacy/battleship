@@ -21,6 +21,7 @@ class Game
     @human_player_board = Board.new(length)
     @settings = settings
     @start_time = Time.new
+
     ship_placement
 
     until Rules.game_is_over?(human_player, computer_player)
@@ -37,7 +38,7 @@ class Game
     computer_ship_placement
     human_ship_placement
   end
-  # Computer places all ships
+
   def computer_ship_placement
     computer_player.fleet.each do |ship|
       coordinates = computer_player.pick_coordinates(computer_player_board, ship)
@@ -46,19 +47,23 @@ class Game
     puts Messages.ship_placement_message
   end
 
-  # Output messages
-
   def human_ship_placement
     ouput_difficulty_level_instructions(settings.difficulty_level)
     human_player.ships.each do |ship_type|
       ship = human_player.get_ship(ship_type)
-      coordinates = []
-      until valid_coordinates?(human_player_board, ship, coordinates)
-        puts Messages.prompt_place_ship(ship_type)
-        coordinates = HelperMethods.get_user_coordinates
-      end
+      coordinates = get_valid_ship_coordinates_from_player(ship)
       human_player.place_ship(human_player_board, ship, coordinates[0], coordinates[1])
     end
+  end
+
+  def get_valid_ship_coordinates_from_player(ship)
+    coordinates_pass_validation = false
+    until coordinates_pass_validation
+      puts Messages.prompt_place_ship(ship.length)
+      coordinates = HelperMethods.get_user_coordinates
+      coordinates_pass_validation = valid_coordinates?(human_player_board, ship, coordinates)
+    end
+    return coordinates
   end
 
   def ouput_difficulty_level_instructions(difficulty_level)
@@ -66,86 +71,142 @@ class Game
     puts Messages.intermediate_units + "\n" + Messages.intermediate_grid_description if difficulty_level == "Intermediate"
     puts Messages.advanced_units + "\n" + Messages.advanced_grid_description if difficulty_level == "Advanced"
     puts "You are running in test mode with on 2-unit ship and a 2x2 board." if difficulty_level == "Test Mode"
+    puts Display.render(human_player_board)  + "\n"
   end
 
-  def valid_coordinates?(board, ship, coordinates)
-    unless Rules.both_coordinates_valid?(board, coordinates[0], coordinates[1])
+  def validate_that_coordinates_are_in_bounds(board, coordinates)
+    unless coordinates.class != Array || Rules.both_coordinates_valid?(board, coordinates[0], coordinates[1])
       puts Messages.error_invalid_coordinate
       return false
     end
+    return true
+  end
 
+  def validate_that_coordinates_are_horizontal_or_diagonal(board, coordinates)
     unless Rules.diagonal_placement_compliance?(board, coordinates[0], coordinates[1])
       puts Messages.error_diagonal_placement
       return false
     end
+    return true
+  end
 
+  def validate_that_coordinates_are_correct_distance_apart(board, ship, coordinates)
     unless Rules.length_compliance?(board, ship, coordinates[0], coordinates[1])
       puts Messages.error_length
       return false
     end
+    return true
+  end
 
+  def validate_that_coordinates_are_not_already_occupied(board, ship, coordinates)
     unless Rules.ship_overlap_compliance?(board, ship, coordinates[0], coordinates[1])
       puts Messages.error_overlap
       return false
     end
-
     return true
   end
 
-  def main_phase
-    # Whose turn is it?
+  def valid_coordinates?(board, ship, coordinates)
+    validity_check = false
+    valid_coordinates = validate_that_coordinates_are_in_bounds(board, coordinates)
+    valid_orientation = validate_that_coordinates_are_horizontal_or_diagonal(board, coordinates) if valid_coordinates
+    valid_distance_apart = validate_that_coordinates_are_correct_distance_apart(board, ship, coordinates) if valid_orientation
+    validity_check = validate_that_coordinates_are_not_already_occupied(board, ship, coordinates) if valid_distance_apart
+    return validity_check
+  end
+
+  def whose_turn_is_it_anyway
     if human_player.shots_fired <= computer_player.shots_fired
-      player = human_player
-      opponent = computer_player
-      board = computer_player_board
+      { "player"=>human_player, "opponent"=>computer_player, "board"=>computer_player_board }
     else
-      player = computer_player
-      opponent = human_player
-      board = human_player_board
+      puts "Computer Player's Turn"
+      puts "----------------------"
+      puts "Computer calculating optimal line of fire and projectile trajectory...."
+      { "player"=>computer_player, "opponent"=>human_player, "board"=>human_player_board }
     end
+  end
 
-    if player.class == Player
-      coordinate = ""
-      until valid_firing_coordinate?(board, coordinate)
-        puts Display.render(board)
-        puts Messages.prompt_player_for_firing_coordinates
-        coordinate = HelperMethods.get_user_coordinate
-      end
-      player.attack(board, coordinate)
-      if AttackAssessment.hit?(board, coordinate)
-        puts Messages.message_hit
-        ship = AttackAssessment.get_ship_by_coordinate(board, opponent, coordinate)
-        ship.hit
-        puts Messages.hit_sink_message(ship.length) if ship.is_sunk?
-        puts Messages.hit_no_sink_message unless ship.is_sunk?
-      else
-        puts Messages.message_miss
-      end
-      unless Rules.game_is_over?(human_player, computer_player)
-        puts Messages.player_map_message
-        puts Display.render(board)
-        user_input = ""
-        until user_input.include?"\n"
-          puts Messages.prompt_player_to_end_turn
-          user_input = gets
-        end
-      end
-
-    # AI TURN
+  def show_messages_and_board(player)
+    if player == human_player
+      puts Messages.player_map_message
+      puts Display.render(computer_player_board)
     else
-      coordinate = player.pick_unattacked(board)
-      player.attack(board, coordinate)
-      if AttackAssessment.hit?(board, coordinate)
-        puts Messages.message_computer_hit(coordinate)
-        ship = AttackAssessment.get_ship_by_coordinate(board, opponent, coordinate)
-        ship.hit
-        puts Messages.hit_sink_message(ship.length) if ship.is_sunk?
-        puts Messages.hit_no_sink_message unless ship.is_sunk?
-      else
-        puts Messages.message_computer_miss(coordinate)
-      end
       puts Messages.computer_map_message
-      puts Display.render(board)
+      puts Display.render(human_player_board)
+    end
+  end
+
+  def get_firing_coordinate_from_player(player)
+    player == computer_player ? player.pick_unattacked(human_player_board) : human_player_firing_coordinate_selection(player, computer_player_board)
+  end
+
+  def human_player_firing_coordinate_selection(player, opponent_board)
+    valid_firing_coordinates_provided = false
+    until valid_firing_coordinates_provided
+      show_messages_and_board(player)
+      puts Messages.prompt_player_for_firing_coordinates
+      coordinate = HelperMethods.get_user_coordinate
+      valid_firing_coordinates_provided = valid_firing_coordinate?(opponent_board, coordinate)
+    end
+    return coordinate
+  end
+
+  def display_hit_or_miss_message(board, coordinate, player)
+    if AttackAssessment.hit?(board, coordinate) && player == human_player
+      puts Messages.message_hit
+    elsif AttackAssessment.hit?(board, coordinate) && player == computer_player
+      puts Messages.message_computer_hit(coordinate)
+    elsif !AttackAssessment.hit?(board, coordinate) && player == human_player
+      puts Messages.message_miss
+    elsif !AttackAssessment.hit?(board, coordinate) && player == computer_player
+      puts Messages.message_computer_miss(coordinate)
+    end
+  end
+
+  def allocate_damage_to_ship(board, coordinate, opponent)
+    ship = AttackAssessment.get_ship_by_coordinate(board, opponent, coordinate)
+    puts "Damage assessment:\nShip damage was #{ship.damage}"
+    ship.hit
+    puts "Ship damage is now #{ship.damage}"
+  end
+
+  def display_sink_or_not_sink_message(ship)
+    if ship.is_sunk?
+      puts Messages.hit_sink_message(ship.length)
+    else
+      puts Messages.hit_no_sink_message
+    end
+  end
+
+  def attack_sequence(board, coordinate, player, opponent)
+    player.fire
+    display_hit_or_miss_message(board, coordinate, player)
+    board.set_space_attacked(coordinate)
+    if AttackAssessment.hit?(board, coordinate)
+      allocate_damage_to_ship(board, coordinate, opponent)
+      ship = AttackAssessment.get_ship_by_coordinate(board, opponent, coordinate)
+      display_sink_or_not_sink_message(ship)
+    end
+  end
+
+  def end_turn(player)
+    return if player == computer_player
+    user_input = ""
+    until user_input.include?("\n")
+      puts Messages.prompt_player_to_end_turn
+      user_input = gets
+    end
+  end
+
+  def main_phase
+    game_lost = false
+    until game_lost
+      turn = whose_turn_is_it_anyway
+      coordinate = get_firing_coordinate_from_player(turn["player"])
+      attack_sequence(turn["board"], coordinate, turn["player"], turn["opponent"])
+      show_messages_and_board(turn["player"])
+      end_turn(turn["player"])
+      game_lost = turn["opponent"].check_if_game_is_lost
     end
   end
 
@@ -154,8 +215,7 @@ class Game
       puts Messages.error_invalid_coordinate
       return false
     end
-
-    if Rules.virgin_attack_compliance?(board, coordinate)
+    unless Rules.virgin_attack_compliance?(board, coordinate)
       puts Messages.error_previously_attacked_coordinate
       return false
     end

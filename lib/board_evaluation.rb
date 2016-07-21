@@ -1,6 +1,6 @@
 module BoardEvaluation
-  def contains?(coordinates)
-    create_space_names.include?(coordinates)
+  def contains?(coordinate)
+    create_space_names.include?(coordinate)
   end
 
   def same_row?(coordinate1, coordinate2)

@@ -135,8 +135,8 @@ class RulesTest < Minitest::Test
   def test_virgin_attack_compliance
     b1 = Board.new(4)
     p1 = Player.new([2,3])
-    expected1 = false
-    expected2 = true
+    expected1 = true
+    expected2 = false
 
     actual1 = Rules.virgin_attack_compliance?(b1, "A1")
     p1.attack(b1, "A1")

@@ -9,7 +9,7 @@ module Rules
   end
 
   def self.both_coordinates_valid?(board, coordinate1, coordinate2)
-    board.contains?(coordinate1) && board.contains?(coordinate2)
+    board.contains?(coordinate1) && board.contains?(coordinate2) ? true : false
   end
 
   def self.diagonal_placement_compliance?(board, start_space, end_space)
@@ -33,7 +33,7 @@ module Rules
   end
 
   def self.virgin_attack_compliance?(board, coordinate)
-    board.space_attacked?(coordinate)
+    !board.space_attacked?(coordinate)
   end
 
   def self.game_is_over?(player1, player2)
