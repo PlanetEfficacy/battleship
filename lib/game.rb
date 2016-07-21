@@ -117,9 +117,11 @@ class Game
 
   def whose_turn_is_it_anyway
     if human_player.shots_fired <= computer_player.shots_fired
+      puts "\n\nHuman Player's Turn"
+      puts "----------------------"
       { "player"=>human_player, "opponent"=>computer_player, "board"=>computer_player_board }
     else
-      puts "Computer Player's Turn"
+      puts "\n\nComputer Player's Turn"
       puts "----------------------"
       puts "Computer calculating optimal line of fire and projectile trajectory...."
       { "player"=>computer_player, "opponent"=>human_player, "board"=>human_player_board }
@@ -225,12 +227,34 @@ class Game
   def end_sequence
     if human_player.check_if_game_is_lost
       puts Messages.condolences
-      puts Messages.shots_fired_message(computer_player.shots_fired)
+      puts "Computer" + Messages.shots_fired_message(computer_player.shots_fired)
     else
       puts Messages.congratulations
-      puts Messages.shots_fired_message(human_player.shots_fired)
+      puts "Your" + Messages.shots_fired_message(human_player.shots_fired)
     end
-    puts Messages.game_clock_message(Time.new - start_time)
+    puts Messages.game_clock_message(player_readable_time)
   end
 
+  def player_readable_time
+    time = Time.new - start_time
+    seconds = time.round(2)
+    minutes = (time/60).round(2)
+    hours = (time/60/60).round(2)
+
+    return "#{seconds} seconds" if game_took_seconds?(time)
+    return "#{minutes} minutes" if game_took_minutes?(time)
+    return "#{hours} hours" if game_took_hours?(time)
+  end
+
+  def game_took_seconds?(time)
+    time < 60
+  end
+
+  def game_took_minutes?(time)
+    time >= 60 && time < 60 * 60
+  end
+
+  def game_took_hours?(time)
+    time >= 60 * 60
+  end
 end

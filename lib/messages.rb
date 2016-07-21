@@ -11,7 +11,7 @@ module Messages
   def self.how_to_play
     "\n\nPrepare For Battle\n\nThe computer will place ships and then you will be prompted to place ships.\nSelect the start and end coordinates you wish the ship to occupy.\n\nRules for placing ships:\n\nPlace each ship in any horizontal or vertical position, but not diagonally.\nDo not place a ship that any part of it overlaps letters, numbers, the edge of the grid, or another ship.\n\nHow to Play\n\nOn your turn pick a target space to attack and enter its location by letter and number.\nIf you pick a space occupied by a ship on your opponent's ocean grid, your shot is a hit!\n\nIt's a Miss!\n\nIf you pick a space that is not occupied by a ship on your opponent's ocean grid, it is a miss.\nAfter a hit or miss, your turn is over.\nPlay continues in this manner, with you and your opponent picking spaces one shot per turn.\n\nSinking a Ship\n\nOnce all the spaces any one ship occupies have been attacked, it has been sunk.\n\nWinning the Game\n\nIf you are the first player to sink all of your opponents ships, you win the game!\n\n\n" + prompt_to_play
   end
-
+2
   def self.ship_placement_message
     "\n\nI have laid out my ships on the grid.\n\nYou now need to layout your ships."
   end
@@ -45,8 +45,8 @@ module Messages
   end
 
   def self.prompt_place_ship(ship_type)
-    ships = { 2 => "two", 3 => "three", 4 => "four", 5 => "Battle Star Galactica - five"}
-    "\n\nEnter the squares for the #{ships[ship_type]}-unit ship. For example 'A1 A2':"
+    ships = { 2 => ["two", "A1 A2"], 3 => ["three", "B1 B3"], 4 => ["four", "C1 C4"], 5 => ["Battle Star Galactica - five", "D1 D5"]}
+    "\n\nEnter the squares for the #{ships[ship_type][0]}-unit ship. For example:\n\n#{ships[ship_type][1]}\n\nEnter desired attack coordinates:"
   end
 
   def self.error_diagonal_placement
@@ -122,7 +122,7 @@ module Messages
   end
 
   def self.shots_fired_message(shots_fired)
-    "\n\nAmmunition stores depleated by #{shots_fired} shells."
+    " ammunition stores depleated by #{shots_fired} shells."
   end
 
   def self.game_clock_message(time_string)

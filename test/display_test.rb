@@ -5,20 +5,20 @@ require './lib/board'
 class DisplayTest < Minitest::Test
   include Display
   def test_it_creates_a_row
-    assert_equal "A  M  M  M  M  M  M  M  M  M  M  M  M", row(["A","M","M","M","M","M","M","M","M","M","M","M","M"])
-    assert_equal "B  M     M     M     M     M     M", row(["B","M","","M","","M","","M","","M","","M",""])
-    assert_equal "C     M     M     M     M     M     M", row(["C","","M","","M","","M","","M","","M","","M"])
-    assert_equal "D", row(["D","","","","","","","","","","","",""])
+    assert_equal "A  M  M  M  M  M  M  M  M  M  M  M  M", Display.row(["A","M","M","M","M","M","M","M","M","M","M","M","M"])
+    assert_equal "B  M     M     M     M     M     M", Display.row(["B","M","","M","","M","","M","","M","","M",""])
+    assert_equal "C     M     M     M     M     M     M", Display.row(["C","","M","","M","","M","","M","","M","","M"])
+    assert_equal "D", Display.row(["D","","","","","","","","","","","",""])
   end
 
   def test_blank_cells_converted_to_space
-    assert_equal "   ", parse_blank("")
+    assert_equal "   ", Display.parse_blank("")
   end
 
   def test_it_displays_header
-    assert_equal ".  1  2  3  4", header(4)
-    assert_equal ".  1  2  3  4  5  6  7  8", header(8)
-    assert_equal ".  1  2  3  4  5  6  7  8  9  10 11 12", header(12)
+    assert_equal ".  1  2  3  4", Display.header(4)
+    assert_equal ".  1  2  3  4  5  6  7  8", Display.header(8)
+    assert_equal ".  1  2  3  4  5  6  7  8  9  10 11 12", Display.header(12)
   end
 
   def test_it_displays_grid
@@ -50,7 +50,7 @@ class DisplayTest < Minitest::Test
     rowj = ["J","M","","M","","M","","M","","M","","M",""]
     rowk = ["K","","M","","M","","M","","M","","M","","M"]
     rowl = ["L","M","","M","","M","","M","","M","","M",""]
-    actual = display_grid(12, [rowa, rowb, rowc, rowd, rowe, rowf, rowg, rowh, rowi, rowj, rowk, rowl])
+    actual = Display.display_grid(12, [rowa, rowb, rowc, rowd, rowe, rowf, rowg, rowh, rowi, rowj, rowk, rowl])
 
     assert_equal expected, actual
   end
@@ -82,18 +82,18 @@ class DisplayTest < Minitest::Test
     expected += "K     M     M     M     M     M     M\n"
     expected += "L  M     M     M     M     M     M\n"
 
-    actual = make_rows_data_presentable(rows_data)
+    actual = Display.make_rows_data_presentable(rows_data)
 
     assert_equal expected, actual
   end
 
   def test_it_can_make_a_short_border
-    assert_equal "================", border(4)
-    assert_equal "============================", border(8)
+    assert_equal "================", Display.border(4)
+    assert_equal "============================", Display.border(8)
   end
 
   def test_it_can_make_a_long_border
-    assert_equal "========================================", border(12)
+    assert_equal "========================================", Display.border(12)
   end
 
   def test_it_can_get_row_data
@@ -108,8 +108,8 @@ class DisplayTest < Minitest::Test
     row1 = b1.board[0]
     row2 = b2.board[0]
 
-    actual1 = get_row_data(b1, row1)
-    actual2 = get_row_data(b2, row2)
+    actual1 = Display.get_row_data(b1, row1)
+    actual2 = Display.get_row_data(b2, row2)
 
     assert_equal expected1, actual1
     assert_equal expected2, actual2
@@ -136,8 +136,8 @@ class DisplayTest < Minitest::Test
     b2.set_space_attacked("B3")
     b2.set_space_attacked("C3")
 
-    actual1 = get_rows_data(b1)
-    actual2 = get_rows_data(b2)
+    actual1 = Display.get_rows_data(b1)
+    actual2 = Display.get_rows_data(b2)
 
     assert_equal expected1, actual1
     assert_equal expected2, actual2
@@ -244,25 +244,6 @@ class DisplayTest < Minitest::Test
     big_board.set_space_attacked("L9")
     big_board.set_space_attacked("L11")
 
-    assert_equal expected, render(big_board)
+    assert_equal expected, Display.render(big_board)
   end
-
-  # def test_remove_outer_array
-  #   input = [["A", "", "M", "", "M", "", "M", "", "M", "", "M", "", "M"],
-  #            ["B", "H", "", "M", "", "M", "", "M", "", "M", "", "M", ""],
-  #            ["C", "", "H", "", "M", "", "M", "", "M", "", "M", "", "M"],
-  #            ["D", "M", "", "H", "", "M", "", "M", "", "M", "", "M", ""],
-  #            ["E", "", "M", "", "H", "", "M", "", "M", "", "M", "", "M"],
-  #            ["F", "M", "", "M", "", "H", "", "M", "", "M", "", "M", ""],
-  #            ["G", "", "M", "", "M", "", "H", "", "M", "", "M", "", "M"],
-  #            ["H", "M", "", "M", "", "M", "", "H", "", "M", "", "M", ""],
-  #            ["I", "", "M", "", "M", "", "M", "", "H", "", "M", "", "M"],
-  #            ["J", "M", "", "M", "", "M", "", "M", "", "H", "", "M", ""],
-  #            ["K", "", "M", "", "M", "", "M", "", "M", "", "H", "", "M"],
-  #            ["L", "M", "", "M", "", "M", "", "M", "", "M", "", "H", ""]]
-  #   expected =
-  #
-  #
-  # end
-
 end

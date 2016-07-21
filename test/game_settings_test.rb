@@ -4,7 +4,7 @@ require './lib/game_settings'
 class GameSettingsTest < Minitest::Test
 
   def test_it_can_select_a_setting
-    settings = GameSettings.new("B")
+    settings = GameSettings.new("b")
     expected1 = {"length"=>4, "ships"=>[2, 3]}
     actual1 = settings.difficulty
 
@@ -12,9 +12,9 @@ class GameSettingsTest < Minitest::Test
   end
 
   def test_it_can_get_difficulty_level
-    settings_b = GameSettings.new("B")
-    settings_i = GameSettings.new("I")
-    settings_a = GameSettings.new("A")
+    settings_b = GameSettings.new("b")
+    settings_i = GameSettings.new("i")
+    settings_a = GameSettings.new("a")
 
     actual1 = settings_b.difficulty_level
     actual2 = settings_i.difficulty_level
