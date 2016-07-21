@@ -125,4 +125,22 @@ class AiPlayerTest < Minitest::Test
     assert_equal expected, actual
   end
 
+  def test_ai_can_pick_acceptable_coordinates_for_a_ship
+    ai = AiPlayer.new([2, 3])
+    s2 = ai.get_ship(2)
+    s3 = ai.get_ship(3)
+    board = Board.new(4)
+    expected = ["D3", "D4"]
+    board.set_spaces_occupied("A1", "A4")
+    board.set_spaces_occupied("B1", "B4")
+    board.set_spaces_occupied("C1", "C4")
+    board.set_spaces_occupied("D1", "D2")
+
+    actual = ai.pick_coordinates(board, s2)
+    actual2 = ai.pick_coordinates(board, s3)
+
+    assert_equal expected, actual.sort
+    assert_equal false, actual2
+  end
+
 end

@@ -9,7 +9,7 @@ module Messages
   end
 
   def self.how_to_play
-    "Prepare For Battle\n\nThe computer will place ships and then you will be prompted to place ships. Select the start and end coordinates you wish the ship to occupy.\nRules for placing ships:\nPlace each ship in any horizontal or vertical position, but not diagonally.\nDo not place a ship that any part of it overlaps letters, numbers, the edge of the grid, or another ship.\nHow to Play\n\nOn your turn pick a target space to attack and enter its location by letter and number.\nIf you pick a space occupied by a ship on your opponent's ocean grid, your shot is a hit!\n\nIt's a Miss!\nIf you pick a space that is not occupied by a ship on your opponent's ocean grid, it is a miss.\nAfter a hit or miss, your turn is over.\nPlay continues in this manner, with you and your opponent picking spaces one shot per turn.\n\nSinking a Ship\nOnce all the spaces any one ship occupies have been attacked, it has been sunk.\n\nWinning the Game\nIf you are the first player to sink all of your opponents ships, you win the game!"
+    "Prepare For Battle\n\nThe computer will place ships and then you will be prompted to place ships.\nSelect the start and end coordinates you wish the ship to occupy.\nRules for placing ships:\nPlace each ship in any horizontal or vertical position, but not diagonally.\nDo not place a ship that any part of it overlaps letters, numbers, the edge of the grid, or another ship.\nHow to Play\n\nOn your turn pick a target space to attack and enter its location by letter and number.\nIf you pick a space occupied by a ship on your opponent's ocean grid, your shot is a hit!\n\nIt's a Miss!\nIf you pick a space that is not occupied by a ship on your opponent's ocean grid, it is a miss.\nAfter a hit or miss, your turn is over.\nPlay continues in this manner, with you and your opponent picking spaces one shot per turn.\n\nSinking a Ship\nOnce all the spaces any one ship occupies have been attacked, it has been sunk.\n\nWinning the Game\nIf you are the first player to sink all of your opponents ships, you win the game!"
   end
 
   def self.ship_placement_message
@@ -46,7 +46,19 @@ module Messages
 
   def self.prompt_place_ship(ship_type)
     ships = { 2 => "two", 3 => "three", 4 => "four", 5 => "Battle Star Galactica - five"}
-    "\nEnter the squares for the #{ships[ship_type]}-unit ship:"
+    "\nEnter the squares for the #{ships[ship_type]}-unit ship. For example 'A1 A2':"
+  end
+
+  def self.error_diagonal_placement
+    "Those coordinates are either not in the same row or column.\nShips must be placed horizontally or vertically.\nThe coordinates input to place a ship must either have the same row (eg. A... A...)\nor the same column (eg. ...1 ...1)."
+  end
+
+  def self.error_length
+    "Those coordinates are not the correct distance apart."
+  end
+
+  def self.error_overlap
+    "Placing a ship at those coordinates would overlap another ship."
   end
 
   def self.prompt_player_for_firing_coordinates

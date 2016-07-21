@@ -2,20 +2,6 @@ require './test/test_helper'
 require './lib/game_settings'
 
 class GameSettingsTest < Minitest::Test
-  def test_it_has_three_difficulty_levels
-    settings = GameSettings.new("A")
-    expected1 = {"length"=>4, "ships"=>[2, 3]}
-    expected2 = {"length"=>8, "ships"=>[2, 3, 4]}
-    expected3 = {"length"=>12, "ships"=>[2, 3, 4, 5]}
-
-    actual1 = settings.beginner
-    actual2 = settings.intermediate
-    actual3 = settings.advanced
-
-    assert_equal expected1, actual1
-    assert_equal expected2, actual2
-    assert_equal expected3, actual3
-  end
 
   def test_it_can_select_a_setting
     settings = GameSettings.new("B")
@@ -24,4 +10,19 @@ class GameSettingsTest < Minitest::Test
 
     assert_equal expected1, actual1
   end
+
+  def test_it_can_get_difficulty_level
+    settings_b = GameSettings.new("B")
+    settings_i = GameSettings.new("I")
+    settings_a = GameSettings.new("A")
+
+    actual1 = settings_b.difficulty_level
+    actual2 = settings_i.difficulty_level
+    actual3 = settings_a.difficulty_level
+
+    assert_equal "Beginner", actual1
+    assert_equal "Intermediate", actual2
+    assert_equal "Advanced", actual3
+  end
+
 end

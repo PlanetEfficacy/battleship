@@ -1,11 +1,11 @@
 require './lib/game'
 
 module AttackAssessment
-  def hit?(board, coordinate)
+  def self.hit?(board, coordinate)
     board.space_occupied?(coordinate)
   end
 
-  def get_ship_by_coordinate(board, player, coordinate)
+  def self.get_ship_by_coordinate(board, player, coordinate)
     fleet = player.fleet
     fleet.find do |ship|
       start_space = ship.start_space

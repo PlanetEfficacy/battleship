@@ -10,7 +10,7 @@ class RulesTest < Minitest::Test
     s1 = p1.get_ship(2)
     p1.place_ship(b1, s1, "A1", "B1")
 
-    assert hit?(b1, "A1")
+    assert AttackAssessment.hit?(b1, "A1")
   end
 
   def test_get_ship_by_coordinate
@@ -21,11 +21,11 @@ class RulesTest < Minitest::Test
     p1.place_ship(b1, s1, "A1", "B1")
     p1.place_ship(b1, s2, "D1", "D3")
 
-    assert_equal s1, get_ship_by_coordinate(b1, p1, "A1")
-    assert_equal s1, get_ship_by_coordinate(b1, p1, "B1")
-    assert_equal s2, get_ship_by_coordinate(b1, p1, "D1")
-    assert_equal s2, get_ship_by_coordinate(b1, p1, "D2")
-    assert_equal s2, get_ship_by_coordinate(b1, p1, "D3")
+    assert_equal s1, AttackAssessment.get_ship_by_coordinate(b1, p1, "A1")
+    assert_equal s1, AttackAssessment.get_ship_by_coordinate(b1, p1, "B1")
+    assert_equal s2, AttackAssessment.get_ship_by_coordinate(b1, p1, "D1")
+    assert_equal s2, AttackAssessment.get_ship_by_coordinate(b1, p1, "D2")
+    assert_equal s2, AttackAssessment.get_ship_by_coordinate(b1, p1, "D3")
   end
 
 end

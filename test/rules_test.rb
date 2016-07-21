@@ -29,21 +29,21 @@ class RulesTest < Minitest::Test
                     "K1", "K2", "K3", "K4", "K5", "K6", "K7", "K8", "K9", "K10", "K11", "K12",
                     "L1", "L2", "L3", "L4", "L5", "L6", "L7", "L8", "L9", "L10", "L11", "L12"]
 
-    valid_spaces.map {|space| valid_space?(board, space)}.each do |valid|
+    valid_spaces.map {|space| Rules.valid_space?(board, space)}.each do |valid|
       assert valid
     end
 
-    refute valid_space?(board, space1)
-    refute valid_space?(board, space2)
-    refute valid_space?(board, space3)
-    refute valid_space?(board, space4)
-    refute valid_space?(board, space5)
-    refute valid_space?(board, space6)
-    refute valid_space?(board, space7)
-    refute valid_space?(board, space8)
-    refute valid_space?(board, space9)
-    refute valid_space?(board, space10)
-    refute valid_space?(board, space11)
+    refute Rules.valid_space?(board, space1)
+    refute Rules.valid_space?(board, space2)
+    refute Rules.valid_space?(board, space3)
+    refute Rules.valid_space?(board, space4)
+    refute Rules.valid_space?(board, space5)
+    refute Rules.valid_space?(board, space6)
+    refute Rules.valid_space?(board, space7)
+    refute Rules.valid_space?(board, space8)
+    refute Rules.valid_space?(board, space9)
+    refute Rules.valid_space?(board, space10)
+    refute Rules.valid_space?(board, space11)
 
   end
 
@@ -57,10 +57,10 @@ class RulesTest < Minitest::Test
     valid_end_space_2 = "A3"
     ship_1 = player.fleet[1]
 
-    refute diagonal_placement_compliance?(board, ship_1, start_space_1, invalid_end_space_1)
-    refute diagonal_placement_compliance?(board, ship_1, start_space_1, invalid_end_space_2)
-    assert diagonal_placement_compliance?(board, ship_1, start_space_1, valid_end_space_1)
-    assert diagonal_placement_compliance?(board, ship_1, start_space_1, valid_end_space_2)
+    refute Rules.diagonal_placement_compliance?(board, start_space_1, invalid_end_space_1)
+    refute Rules.diagonal_placement_compliance?(board, start_space_1, invalid_end_space_2)
+    assert Rules.diagonal_placement_compliance?(board, start_space_1, valid_end_space_1)
+    assert Rules.diagonal_placement_compliance?(board, start_space_1, valid_end_space_2)
 
   end
 
@@ -76,12 +76,12 @@ class RulesTest < Minitest::Test
     invalid_space8 = "z12"
     valid_spaces = ["A1", "A2", "A3", "A4"]
 
-    refute both_coordinates_valid?(board, invalid_space1, valid_spaces[0])
-    refute both_coordinates_valid?(board, valid_spaces[1],invalid_space2)
-    refute both_coordinates_valid?(board, invalid_space3, invalid_space4)
-    refute both_coordinates_valid?(board, invalid_space5, invalid_space6)
-    refute both_coordinates_valid?(board, invalid_space7, invalid_space8)
-    assert both_coordinates_valid?(board, valid_spaces[2], valid_spaces[3])
+    refute Rules.both_coordinates_valid?(board, invalid_space1, valid_spaces[0])
+    refute Rules.both_coordinates_valid?(board, valid_spaces[1],invalid_space2)
+    refute Rules.both_coordinates_valid?(board, invalid_space3, invalid_space4)
+    refute Rules.both_coordinates_valid?(board, invalid_space5, invalid_space6)
+    refute Rules.both_coordinates_valid?(board, invalid_space7, invalid_space8)
+    assert Rules.both_coordinates_valid?(board, valid_spaces[2], valid_spaces[3])
   end
 
   def test_length_compliance?
@@ -101,12 +101,12 @@ class RulesTest < Minitest::Test
     start_space_5 = "L12"
     end_space_5 = "H12"
 
-    assert length_compliance?(board, ship2, start_space_1, end_space_1)
-    assert length_compliance?(board, ship3, start_space_2, end_space_2)
-    refute length_compliance?(board, ship4, start_space_3, end_space_3)
-    assert length_compliance?(board, ship3, start_space_4, end_space_4)
-    refute length_compliance?(board, ship4, start_space_4, end_space_4)
-    assert length_compliance?(board, ship5, start_space_5, end_space_5)
+    assert Rules.length_compliance?(board, ship2, start_space_1, end_space_1)
+    assert Rules.length_compliance?(board, ship3, start_space_2, end_space_2)
+    refute Rules.length_compliance?(board, ship4, start_space_3, end_space_3)
+    assert Rules.length_compliance?(board, ship3, start_space_4, end_space_4)
+    refute Rules.length_compliance?(board, ship4, start_space_4, end_space_4)
+    assert Rules.length_compliance?(board, ship5, start_space_5, end_space_5)
   end
 
   def test_ship_overlap_compliance?
@@ -126,10 +126,10 @@ class RulesTest < Minitest::Test
     p2.place_ship(b2, s3, "B2", "B4")
 
 
-    assert_equal false, ship_overlap_compliance?(b1, s2, "A1", "B1")
-    assert_equal false, ship_overlap_compliance?(b2, s4, "H9", "H12")
-    assert_equal false, ship_overlap_compliance?(b2, s5, "A3", "E3")
-    assert_equal true, ship_overlap_compliance?(b2, s5, "A1", "E1")
+    assert_equal false, Rules.ship_overlap_compliance?(b1, s2, "A1", "B1")
+    assert_equal false, Rules.ship_overlap_compliance?(b2, s4, "H9", "H12")
+    assert_equal false, Rules.ship_overlap_compliance?(b2, s5, "A3", "E3")
+    assert_equal true, Rules.ship_overlap_compliance?(b2, s5, "A1", "E1")
   end
 
   def test_virgin_attack_compliance
@@ -138,9 +138,9 @@ class RulesTest < Minitest::Test
     expected1 = false
     expected2 = true
 
-    actual1 = virgin_attack_compliance?(b1, "A1")
+    actual1 = Rules.virgin_attack_compliance?(b1, "A1")
     p1.attack(b1, "A1")
-    actual2 = virgin_attack_compliance?(b1, "A1")
+    actual2 = Rules.virgin_attack_compliance?(b1, "A1")
 
     assert_equal expected1, actual1
     assert_equal expected2, actual2
@@ -152,9 +152,9 @@ class RulesTest < Minitest::Test
     expected1 = false
     expected2 = true
 
-    actual1 = game_is_over?(p1, p2)
+    actual1 = Rules.game_is_over?(p1, p2)
     p1.get_ship(1).hit
-    actual2 = game_is_over?(p1, p2)
+    actual2 = Rules.game_is_over?(p1, p2)
 
     assert_equal expected1, actual1
     assert_equal expected2, actual2

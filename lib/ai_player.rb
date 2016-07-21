@@ -55,4 +55,10 @@ class AiPlayer < Player
     end
   end
 
+  def pick_coordinates(board, ship)
+    coordinate1 = pick_unoccupied(board)
+    coordinate2 = pick_x_units(board, coordinate1, ship.length)
+    [coordinate1, coordinate2].include?(nil) ? false : [coordinate1, coordinate2]
+  end
+
 end

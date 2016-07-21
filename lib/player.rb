@@ -5,7 +5,8 @@ class Player
   attr_reader :shots_fired,
               :is_loser,
               :known_spaces,
-              :fleet
+              :fleet,
+              :ships
 
   def initialize(ship_types)
     @shots_fired = 0
