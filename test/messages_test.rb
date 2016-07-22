@@ -57,10 +57,10 @@ class MessagesTest < Minitest::Test
   end
 
   def test_prompt_to_place_ship
-    actual = "\n\nEnter the squares for the two-unit ship. For example:\n\nA1 A2\n\nEnter desired attack coordinates:"
-    actual2 = "\n\nEnter the squares for the three-unit ship. For example:\n\nB1 B3\n\nEnter desired attack coordinates:"
-    actual3 = "\n\nEnter the squares for the four-unit ship. For example:\n\nC1 C4\n\nEnter desired attack coordinates:"
-    actual4 = "\n\nEnter the squares for the Battle Star Galactica - five-unit ship. For example:\n\nD1 D5\n\nEnter desired attack coordinates:"
+    actual = "\n\nEnter the squares for the two-unit ship. For example:\n\nA1 A2\n\nEnter desired ship placement coordinates:"
+    actual2 = "\n\nEnter the squares for the three-unit ship. For example:\n\nB1 B3\n\nEnter desired ship placement coordinates:"
+    actual3 = "\n\nEnter the squares for the four-unit ship. For example:\n\nC1 C4\n\nEnter desired ship placement coordinates:"
+    actual4 = "\n\nEnter the squares for the Battle Star Galactica - five-unit ship. For example:\n\nD1 D5\n\nEnter desired ship placement coordinates:"
     assert_equal actual, Messages.prompt_place_ship(2)
   end
 

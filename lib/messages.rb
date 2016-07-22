@@ -46,7 +46,7 @@ module Messages
 
   def self.prompt_place_ship(ship_type)
     ships = { 2 => ["two", "A1 A2"], 3 => ["three", "B1 B3"], 4 => ["four", "C1 C4"], 5 => ["Battle Star Galactica - five", "D1 D5"]}
-    "\n\nEnter the squares for the #{ships[ship_type][0]}-unit ship. For example:\n\n#{ships[ship_type][1]}\n\nEnter desired attack coordinates:"
+    "\n\nEnter the squares for the #{ships[ship_type][0]}-unit ship. For example:\n\n#{ships[ship_type][1]}\n\nEnter desired ship placement coordinates:"
   end
 
   def self.error_diagonal_placement
