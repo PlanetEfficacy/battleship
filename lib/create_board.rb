@@ -19,11 +19,9 @@ module CreateBoard
   end
 
   def create_spaces
-    spaces = {}
     create_space_names.map do |name|
-      spaces["#{name}"] = Space.new(name)
-    end
-    spaces
+      [name, Space.new(name)]
+    end.to_h
   end
 
   def assign_spaces_to_rows
